@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Raleway:wght@400;700&display=swap');
+
+
+:root {
+    --squareSide: 60px;
+    --border1: 1px solid darkblue;
+    --gradient1: linear-gradient(315deg, #29539b 0%, #1e3b70 74%);
+    --gradient2: linear-gradient(315deg, #1b3d77 0%, #0e244e 74%);
+    --fontFamily1: 'Raleway', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    --fontFamily2: 'Cairo', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    --rotateDuration: 3.5s;
+    --fadeInDuration: 3s;
+    --scrollByDuration: 7.5s
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    flex-basis: auto;
+    overflow-x: hidden;
+    position: relative;
+    font-family: var(--fontFamily1);
+    background-image: url("./img/iguana.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body > *:not(script) {
+    display: grid;
+}
+
+/*  */
+/*  */
+
+button {
+    all: unset;
+    width: fit-content;
+    display: grid;
+    place-items: center;
+    color: black;
+    background: white;
+    font-family: var(--fontFamily2);
+    font-size: 1.15rem;
+    font-weight: bold;
+    padding: .33em .66em;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+    transition: .2s linear;
+}
+
+button:hover {
+    box-shadow:
+        1px 1px 3px 1px #bbb,
+        -1px -1px 3px 1px #bbb;
+}
+
+button:active {
+    transform: scale(.925);
+}
+
+/*  */
+/*  */
+
+header {
+    place-items: center;
+    padding: .66em;
+    background-image: var(--gradient1);
+}
+
+h1 {
+    color: white;
+    font-size: 2.75rem;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+/*  */
+/*  */
+
+main {
+    height: 100%;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+main section {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.widget {
+    width: 50%;
+    background-image: var(--gradient2);
+    color: white;
+    padding: .75em;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+}
+
+#flags p {
+    width: 100%;
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+/*  */
+/*  */
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+}
+
+#grid > * {
+    width: var(--squareSide);
+    height: var(--squareSide);
+    border: var(--border1);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+    font-weight: 700;
+    font-size: 2em;
+}
+
+#grid > *[data-status="covered"] {
+    background-color: lightgray;
+    text-indent: 99999px;
+    cursor: pointer;
+}
+
+#grid > *[data-status="flagged"] {
+    background-color: lightgray;
+    background-image: url("./img/icon-flag.png");
+}
+
+#grid > *[data-status="mined"] {
+    background-image: url("./img/icon-mine.jpg");
+}
+
+/*  */
+/*  */
+
+.rotate {
+    animation: rotate var(--rotateDuration) linear;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate3d(0, 0, 0, 0deg);
+    }
+    100% {
+        transform: rotate3d(1, 1, 1, 360deg);
+    }
+}
+
+#win-message {
+    width: 100%;
+    min-height: 100px;
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    padding: .33em;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.fadeIn {
+    animation: fadeIn calc(var(--fadeInDuration) + var(--scrollByDuration)) ease-in var(--rotateDuration);
+}
+
+@keyframes fadeIn {
+    0% {
+        background-color: transparent;
+    }
+
+    10% {
+        background-color: rgb(120, 212, 120);
+    }
+    
+    20% {
+        background-color: rgb(51, 204, 51);
+    }
+
+    100% {
+        background-color: rgb(51, 204, 51);
+    }
+}
+
+#win-message p {
+    color: white;
+    font-family: var(--fontFamily2);
+    transform: translateX(-1000vw);
+}
+
+.scrollBy {
+    animation: scrollBy var(--scrollByDuration) ease-in-out calc(var(--rotateDuration) + var(--fadeInDuration));
+}
+
+@keyframes scrollBy {
+    0% {
+        transform: translateX(-100vw);
+    }
+
+    10% {
+        transform: translateX(-20vw);
+    }
+
+    90% {
+        transform: translateX(20vw);
+    }
+
+    100% {
+        transform: translateX(100vw);
+    }
+}
+
+/*  */
+/*  */
+
+@media (max-width: 600px) {
+    :root {
+        --squareSide: 40px;
+    }
+}
+
+@media (min-width: 600.1px) and (max-width: 992px) {
+    :root {
+        --squareSide: 50px;
+    }
+}
+
+@media (max-width: 992px) {
+    body {
+        background-image: url("./img/iguana-smaller.jpg");
+    }
+
+    main {
+        grid-template-columns: unset;
+    }
+
+    main > section:nth-child(1) {
+        order: 2;
+    }
+
+    main > section:nth-child(2) {
+        order: 1;
+    }
+
+    main > section:nth-child(3) {
+        order: 3;
+    }
+}
+
+@media (max-width: 1200px) {
+    h2 {
+        font-size: 1.2em;
+    }
+}
