@@ -167,7 +167,7 @@ squares.forEach(sq => {
             isInitialClick = false;
         }
         revealSquare(sq);
-        checkWin();
+        if (flags === 0) checkWin();
     });
     sq.element.addEventListener("contextmenu", function (e) {
         e.preventDefault();

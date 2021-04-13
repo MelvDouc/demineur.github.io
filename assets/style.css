@@ -99,6 +99,7 @@ main {
 }
 
 main section {
+    padding: 1em;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -278,6 +279,10 @@ main section {
 }
 
 @media (max-width: 1200px) {
+    :root {
+        --squareSide: 55px;
+    }
+
     h2 {
         font-size: 1.2em;
     }
