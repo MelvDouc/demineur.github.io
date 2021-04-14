@@ -2,10 +2,13 @@
 
 
 :root {
-    --squareSide: 60px;
     --border1: 1px solid darkblue;
-    --gradient1: linear-gradient(315deg, #29539b 0%, #1e3b70 74%);
-    --gradient2: linear-gradient(315deg, #1b3d77 0%, #0e244e 74%);
+    --orient1: 315deg;
+    --gradient1: linear-gradient(var(--orient1), hsl(218, 58%, 38%) 0%, hsl(219, 58%, 28%) 74%);
+    --gradient1b: linear-gradient(calc(var(--orient1) - 90deg), hsl(218, 58%, 38%) 0%, hsl(219, 58%, 28%) 74%);
+    --gradient2: linear-gradient(315deg, hsl(218, 63%, 29%) 0%, hsl(219, 70%, 18%) 74%);
+    --gradient3: linear-gradient(315deg, hsl(216, 33%, 79%) 0%, hsl(216, 33%, 97%) 74%);
+    --gradient3b: linear-gradient(315deg, hsl(216, 33%, 97%) 0%, hsl(216, 33%, 79%) 74%);
     --fontFamily1: 'Raleway', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     --fontFamily2: 'Cairo', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --rotateDuration: 3.5s;
@@ -20,7 +23,9 @@
 }
 
 html, body {
-    width: 100vw;
+    width: fit-content;
+    min-width: 100vw;
+    min-height: 100vh;
     height: 100vh;
 }
 
@@ -31,10 +36,6 @@ body {
     overflow-x: hidden;
     position: relative;
     font-family: var(--fontFamily1);
-    background-image: url("./img/iguana.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 body > *:not(script) {
@@ -49,6 +50,7 @@ button {
     width: fit-content;
     display: grid;
     place-items: center;
+    text-align: center;
     color: black;
     background: white;
     font-family: var(--fontFamily2);
@@ -70,6 +72,17 @@ button:hover {
 
 button:active {
     transform: scale(.925);
+}
+
+select {
+    appearance: none;
+    padding: .2em .4em;
+    height: 24px;
+}
+
+select::after {
+    content: "hi";
+    position: absolute;
 }
 
 /*  */
@@ -95,26 +108,39 @@ h1, h2 {
 
 main {
     height: 100%;
-    grid-template-columns: 1fr auto 1fr;
+    background-image: url("./img/iguana.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    grid-template-columns: 4fr 1fr;
 }
 
 main section {
-    padding: 1em;
+    padding: .65em;
     display: flex;
     flex-flow: column wrap;
-    justify-content: center;
     align-items: center;
 }
 
-.widget {
-    width: 50%;
-    background-image: var(--gradient2);
-    color: white;
-    padding: .75em;
-    border-radius: 5px;
-    display: grid;
-    place-items: center;
+main section:first-child {
+    justify-content: center;
 }
+
+main section:nth-child(2) {
+    background-image: var(--gradient1b);
+    color: white;
+    justify-content: space-around;
+}
+
+main section:nth-child(2) > div {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/*  */
+/*  */
 
 #flags p {
     width: 100%;
@@ -131,8 +157,8 @@ main section {
 }
 
 #grid > * {
-    width: var(--squareSide);
-    height: var(--squareSide);
+    width: var(--squareWidth);
+    height: var(--squareWidth);
     border: var(--border1);
     display: grid;
     place-items: center;
@@ -146,14 +172,17 @@ main section {
 }
 
 #grid > *[data-status="covered"] {
-    background-color: lightgray;
+    background-image: var(--gradient3);
     text-indent: 99999px;
     cursor: pointer;
 }
 
+#grid > *[data-status="covered"]:hover {
+    background-image: var(--gradient3b);
+}
+
 #grid > *[data-status="flagged"] {
-    background-color: lightgray;
-    background-image: url("./img/icon-flag.png");
+    background-image: url("./img/icon-flag.png"), var(--gradient3);
 }
 
 #grid > *[data-status="mined"] {
@@ -244,46 +273,17 @@ main section {
 /*  */
 /*  */
 
-@media (max-width: 600px) {
-    :root {
-        --squareSide: 40px;
-    }
-}
-
-@media (min-width: 600.1px) and (max-width: 992px) {
-    :root {
-        --squareSide: 50px;
-    }
-}
-
-@media (max-width: 992px) {
-    body {
-        background-image: url("./img/iguana-smaller.jpg");
-    }
+@media screen and (orientation: portrait) {
 
     main {
         grid-template-columns: unset;
-    }
-
-    main > section:nth-child(1) {
-        order: 2;
-    }
-
-    main > section:nth-child(2) {
-        order: 1;
-    }
-
-    main > section:nth-child(3) {
-        order: 3;
+        min-height: unset;
     }
 }
 
-@media (max-width: 1200px) {
-    :root {
-        --squareSide: 55px;
-    }
-
-    h2 {
-        font-size: 1.2em;
+@media (min-width: 0px) and (max-width: 990px) {
+    main[data-diff="advanced"] {
+        grid-template-columns: unset;
+        min-height: unset;
     }
 }

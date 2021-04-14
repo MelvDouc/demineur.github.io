@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./assets/img/icon-mine.jpg" type="image/png">
     <link rel="stylesheet" href="./assets/style.css">
-    <script src="./assets/app.js" defer></script>
+    <script src="./assets/js/app.js" type="module"></script>
     <title>Démineur</title>
 </head>
 
@@ -18,18 +18,29 @@
     </header>
 
     <main>
-        <section id="info">
-            <div class="widget" id="flags">
-                <h2>Drapeaux restants</h2>
-                <p>20</p>
-            </div>
-        </section>
         <section>
             <div id="grid"></div>
         </section>
-        <section id="controls">
-            <button>Nouvelle partie</button>
+
+        <section>
+            <div>
+                <h2>Difficulté</h2>
+                <select id="difficulty">
+                    <option value="beginner">Facile</option>
+                    <option value="intermediate">Moyen</option>
+                    <option value="advanced">Difficile</option>
+                </select>
+            </div>
+            <div>
+                <h2>Drapeaux restants</h2>
+                <p id="flags"></p>
+            </div>
+
+            <div>
+                <button id="new-game">Nouvelle partie</button>
+            </div>
         </section>
+
 
         <aside id="win-message">
             <p>Tu as gagné&thinsp;! Bravo&thinsp;!</p>
