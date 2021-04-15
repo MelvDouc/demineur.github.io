@@ -42,8 +42,6 @@ export function getAdjacentItems(index) {
 
 export function countAdjacentMines(elem) {
     const index = gridIndex(elem)
-    console.log(index)
-    console.log(getAdjacentItems(index))
     return getAdjacentItems(index)
         .map(i => SQUARES[i])
         .filter(square => square.mined)

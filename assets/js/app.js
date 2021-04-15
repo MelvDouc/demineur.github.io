@@ -4,7 +4,7 @@ import { gridIndex, getAdjacentItems, countAdjacentMines } from "./functions.js"
 // Variables
 // ===== ===== ===== ===== =====
 export const grid = document.getElementById("grid");
-const flagCounter = document.getElementById("flags");
+const flagCounter = document.querySelector(".flags");
 const newGameButton = document.getElementById("new-game");
 const difficultySelect = document.getElementById("difficulty");
 const winMessage = document.getElementById("win-message");
@@ -136,6 +136,11 @@ function flagSquare(e) {
             break;
     }
     flagCounter.innerText = flags;
+    // reset flag counter animation
+    flagCounter.className = "";
+    setTimeout(() => {
+        flagCounter.className = "flags";
+    }, 0);
     checkWin();
 }
 

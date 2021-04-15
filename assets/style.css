@@ -6,8 +6,8 @@
     --mainSectionPadding: .65em;
     --color1: hsl(218, 58%, 38%);
     --color2: hsl(219, 58%, 28%);
-    --color3: hsl(215, 12%, 69%);
-    --color4: hsl(216, 33%, 97%);
+    --color3: hsl(210, 2%, 56%);
+    --color4: hsl(210, 9%, 87%);
     --orient1: 315deg;
     --orient2: 315deg;
     --gradient1: linear-gradient(var(--orient1), var(--color1) 0%, var(--color2) 74%);
@@ -143,10 +143,32 @@ main section:nth-child(2) > div {
 /*  */
 /*  */
 
-#flags p {
+.flags {
     width: 100%;
+    color: gold;
     text-align: center;
+    font-weight: bold;
     font-size: 1.25rem;
+    animation: flagCounter 2s ease-in;
+}
+
+@keyframes flagCounter {
+    0% {
+        --translateValue: 5px;
+        transform: translateY(var(--translateValue));
+        opacity: .66;
+    }
+
+    66.66% {
+        transform: scale(1.085) translateY(calc(var(--translateValue) * .66));
+        color: rgb(217, 229, 143);
+    }
+
+    100% {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+        color: gold;
+    }
 }
 
 /*  */
