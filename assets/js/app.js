@@ -177,9 +177,8 @@ function revealSquare(elem) {
 
         if (SQUARES[elemIndex].mined) return;
 
-        elem.dataset.status = "safe";
         if (countAdjacentMines(elem) > 0)
-            elem.dataset.status += `${countAdjacentMines(elem)}`;
+            elem.dataset.status = `safe${countAdjacentMines(elem)}`;
         const expand = (i) => {
             const adjacentSquares = getAdjacentItems(i)
                 .map(i => SQUARES[i])
@@ -216,7 +215,7 @@ function checkWin() {
     setTimeout(() => {
         if (
             SQUARES.every(square => {
-                return (square.status === "safe" || square.status === "flagged")
+                return (square.status.startsWith("safe") || square.status === "flagged")
             })
             && SQUARES
                 .filter(square => square.mined)
