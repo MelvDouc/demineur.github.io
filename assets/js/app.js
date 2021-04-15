@@ -4,9 +4,9 @@ import { gridIndex, getAdjacentItems, countAdjacentMines } from "./functions.js"
 // Variables
 // ===== ===== ===== ===== =====
 export const grid = document.getElementById("grid");
-const flagCounter = document.querySelector("#flags");
-const newGameButton = document.querySelector("#new-game");
-const difficultySelect = document.querySelector("#difficulty");
+const flagCounter = document.getElementById("flags");
+const newGameButton = document.getElementById("new-game");
+const difficultySelect = document.getElementById("difficulty");
 const winMessage = document.getElementById("win-message");
 
 const difficulties = {
@@ -56,12 +56,6 @@ function createSquares() {
             },
             set status(status) {
                 this.element.dataset.status = status;
-            },
-            /**
-             * @param {string} text
-             */
-            set text(text) {
-                this.element.innerText = text;
             }
         }
 
@@ -82,8 +76,8 @@ function appendElements() {
         .map(square => square.element)
         .forEach(square => grid.append(square));
     grid.style.setProperty("--columns", columns);
-    // Make grid 2/3 of page height
-    grid.style.setProperty("--squareWidth", `${66.66 / rows}vh`);
+    // Set grid height
+    grid.style.setProperty("--squareWidth", `calc(75vh / ${rows})`);
     document.querySelector("main").dataset.diff = difficultySelect.value;
 }
 
@@ -169,9 +163,6 @@ function setMines(elem) {
 
     // 3. Assign boolean to each square, determining whether it is mined
     SQUARES.forEach((square, i) => square.mined = booleans[i]);
-    console.log(booleans.map(b => {
-        if (b === true) return "TRUE"
-    }))
 }
 
 // ===== ===== ===== ===== =====
@@ -188,16 +179,15 @@ function revealSquare(elem) {
 
         elem.dataset.status = "safe";
         if (countAdjacentMines(elem) > 0)
-            elem.innerText = countAdjacentMines(elem);
+            elem.dataset.status += `${countAdjacentMines(elem)}`;
         const expand = (i) => {
             const adjacentSquares = getAdjacentItems(i)
                 .map(i => SQUARES[i])
                 .filter(square => !square.mined && square.status === "covered");
             adjacentSquares.forEach(square => {
-                square.status = "safe";
-                if (countAdjacentMines(square.element) > 0)
-                    square.text = countAdjacentMines(square.element);
-                else expand(square.index);
+                square.status = `safe${countAdjacentMines(square.element)}`;
+                if (countAdjacentMines(square.element) === 0)
+                    expand(square.index);
             })
         }
         expand(elemIndex);

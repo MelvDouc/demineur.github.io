@@ -1,14 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Raleway:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Raleway&display=swap');
 
 
 :root {
     --border1: 1px solid darkblue;
+    --mainSectionPadding: .65em;
+    --color1: hsl(218, 58%, 38%);
+    --color2: hsl(219, 58%, 28%);
+    --color3: hsl(215, 12%, 69%);
+    --color4: hsl(216, 33%, 97%);
     --orient1: 315deg;
-    --gradient1: linear-gradient(var(--orient1), hsl(218, 58%, 38%) 0%, hsl(219, 58%, 28%) 74%);
-    --gradient1b: linear-gradient(calc(var(--orient1) - 90deg), hsl(218, 58%, 38%) 0%, hsl(219, 58%, 28%) 74%);
-    --gradient2: linear-gradient(315deg, hsl(218, 63%, 29%) 0%, hsl(219, 70%, 18%) 74%);
-    --gradient3: linear-gradient(315deg, hsl(216, 33%, 79%) 0%, hsl(216, 33%, 97%) 74%);
-    --gradient3b: linear-gradient(315deg, hsl(216, 33%, 97%) 0%, hsl(216, 33%, 79%) 74%);
+    --orient2: 315deg;
+    --gradient1: linear-gradient(var(--orient1), var(--color1) 0%, var(--color2) 74%);
+    --gradient1b: linear-gradient(calc(var(--orient1) - 90deg), var(--color1) 0%, var(--color2) 74%);
+    --gradient2: linear-gradient(var(--orient2), hsl(218, 63%, 29%) 0%, hsl(219, 70%, 18%) 74%);
+    --gradient3: linear-gradient(var(--orient2), var(--color3) 0%, var(--color4) 74%);
+    --gradient3b: linear-gradient(var(--orient2), var(--color4) 0%, var(--color3) 74%);
     --fontFamily1: 'Raleway', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     --fontFamily2: 'Cairo', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --rotateDuration: 3.5s;
@@ -116,20 +122,15 @@ main {
 }
 
 main section {
-    padding: .65em;
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-}
-
-main section:first-child {
-    justify-content: center;
+    padding: var(--mainSectionPadding);
+    display: grid;
+    place-items: center;
 }
 
 main section:nth-child(2) {
     background-image: var(--gradient1b);
     color: white;
-    justify-content: space-around;
+    grid-template-rows: repeat(3, 1fr);
 }
 
 main section:nth-child(2) > div {
@@ -159,6 +160,7 @@ main section:nth-child(2) > div {
 #grid > * {
     width: var(--squareWidth);
     height: var(--squareWidth);
+    font-size: var(--squareWidth);
     border: var(--border1);
     display: grid;
     place-items: center;
@@ -167,8 +169,6 @@ main section:nth-child(2) > div {
     background-position: center;
     background-repeat: no-repeat;
     background-color: white;
-    font-weight: 700;
-    font-size: 2em;
 }
 
 #grid > *[data-status="covered"] {
@@ -187,6 +187,22 @@ main section:nth-child(2) > div {
 
 #grid > *[data-status="mined"] {
     background-image: url("./img/icon-mine.jpg");
+}
+
+#grid > *[data-status="safe1"] {
+    background-image: url("./img/number-icon1.png");
+}
+
+#grid > *[data-status="safe2"] {
+    background-image: url("./img/number-icon2.png");
+}
+
+#grid > *[data-status="safe3"] {
+    background-image: url("./img/number-icon3.png");
+}
+
+#grid > *[data-status="safe4"] {
+    background-image: url("./img/number-icon4.png");
 }
 
 /*  */
@@ -279,11 +295,21 @@ main section:nth-child(2) > div {
         grid-template-columns: unset;
         min-height: unset;
     }
+
+    main section:nth-child(2) {
+        grid-template-rows: unset;
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (min-width: 0px) and (max-width: 990px) {
     main[data-diff="advanced"] {
         grid-template-columns: unset;
         min-height: unset;
+    }
+
+    main[data-diff="advanced"] section:nth-child(2) {
+        grid-template-rows: unset;
+        grid-template-columns: repeat(3, 1fr);
     }
 }

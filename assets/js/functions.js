@@ -12,32 +12,40 @@ export function gridIndex(elem) {
 export function getAdjacentItems(index) {
     const coords = (n) => {
         return {
-            x: Math.floor(n / columns),
-            y: n % columns
+            x: n % columns,
+            y: Math.floor(n / columns)
         }
     };
     const nCoords = coords(index);
-    const adjacentItems = [
-        coords(index - columns - 1),
-        coords(index - columns),
-        coords(index - columns + 1),
-        coords(index - 1),
-        coords(index + 1),
-        coords(index + columns - 1),
-        coords(index + columns),
-        coords(index + columns + 1),
-    ].filter(n => {
-        return n.x >= 0 && n.x < columns
-            && n.y >= 0 && n.y < rows
-            && Math.abs(nCoords.x - n.x) <= 1
-            && Math.abs(nCoords.y - n.y) <= 1
-    }).map(n => n.x * columns + n.y);
+
+    let adjacentItems = [];
+    for (let xOffset = -1; xOffset <= 1; xOffset++) {
+        for (let yOffset = -1; yOffset <= 1; yOffset++) {
+            if (
+                (xOffset === 0 && yOffset === 0)
+                || (nCoords.x + xOffset < 0)
+                || (nCoords.x + xOffset >= columns)
+                || (nCoords.y + yOffset < 0)
+                || (nCoords.y + yOffset >= rows)
+            ) continue;
+            const o = {
+                x: nCoords.x + xOffset,
+                y: nCoords.y + yOffset
+            }
+            adjacentItems.push(o);
+        }
+    }
+    adjacentItems = adjacentItems.map(n => n.y * columns + n.x)
 
     return adjacentItems;
 }
 
 export function countAdjacentMines(elem) {
-    return getAdjacentItems(gridIndex(elem))
-        .map(index => SQUARES[index])
-        .filter(square => square.mined).length;
+    const index = gridIndex(elem)
+    console.log(index)
+    console.log(getAdjacentItems(index))
+    return getAdjacentItems(index)
+        .map(i => SQUARES[i])
+        .filter(square => square.mined)
+        .length;
 }
