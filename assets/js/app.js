@@ -127,8 +127,10 @@ function flagSquare(e) {
     if (isGameOver) return;
     switch (e.target.dataset.status) {
         case "covered":
-            e.target.dataset.status = "flagged";
-            if (flags > 0) flags--;
+            if (flags > 0) {
+                e.target.dataset.status = "flagged";
+                flags--;
+            }
             break;
         case "flagged":
             e.target.dataset.status = "covered";
@@ -218,13 +220,12 @@ function checkLoss(elem) {
 
 function checkWin() {
     setTimeout(() => {
+        if (flags > 0) return;
         if (
             SQUARES.every(square => {
-                return (square.status.startsWith("safe") || square.status === "flagged")
+                if (square.mined) return square.status === "flagged";
+                else return square.status.startsWith("safe");
             })
-            && SQUARES
-                .filter(square => square.mined)
-                .every(square => square.status === "flagged")
         ) {
             isGameOver = true;
             setTimeout(() => {
@@ -233,7 +234,7 @@ function checkWin() {
                 winMessage.querySelector("p").classList.add("scrollBy");
             }, 1000);
         }
-    }, 10);
+    }, 500);
 }
 
 // ===== ===== ===== ===== =====
@@ -251,9 +252,9 @@ function startNewGame() {
         square.element.addEventListener("contextmenu", flagSquare);
     });
     resetFlags();
-    document.body.classList.remove("rotate");
-    winMessage.classList.remove("fadeIn");
-    winMessage.querySelector("p").classList.remove("scrollBy");
+    document.body.removeAttribute("class");
+    winMessage.removeAttribute("class");
+    winMessage.querySelector("p").removeAttribute("class");
 }
 
 // ===== ===== ===== ===== =====
